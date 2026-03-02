@@ -1,4 +1,6 @@
 # 🏆 Causal Revenue-Optimized Engine Configuration
+# Version: 3.0.0 (Latest - March 2026)
+# Status: PRODUCTION READY ✅
 
 # Data Generation
 data:
@@ -8,6 +10,7 @@ data:
   n_orders: 10000
   time_span_days: 365
   seed: 42
+  version: "3.0.0"
   
   # Causal structure (UNIQUE!)
   treatment_effect: 0.15  # True causal effect of recommendations
@@ -87,29 +90,35 @@ training:
 
 # Inference
 inference:
-  candidate_size: 200
-  top_k: 10
+  candidate_size: 300  # Increased for diversity
+  top_k: 15  # Increased recommendation count
   min_causal_effect: 5.0  # Minimum ₹5 incremental revenue
   min_profit_margin: 0.10  # Minimum 10% margin
+  quality_threshold: 0.85  # Recommendation quality threshold
   
   # Real-time optimization
-  max_latency_ms: 200
+  max_latency_ms: 100  # Reduced for faster response
   enable_caching: true
-  cache_ttl: 3600
+  cache_ttl: 1800  # 30 minutes cache
+  enable_batch_processing: true
 
 # API
 api:
   host: "0.0.0.0"
   port: 8000
-  workers: 4
+  workers: 8  # Increased for higher concurrency
   reload: false
+  debug: false
   
   # Rate limiting
-  rate_limit: 1000  # requests per minute
+  rate_limit: 2000  # requests per minute
+  timeout: 30
   
   # Monitoring
   enable_metrics: true
   metrics_port: 9090
+  enable_health_check: true
+  enable_profiling: false
 
 # Redis
 redis:

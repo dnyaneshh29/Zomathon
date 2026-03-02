@@ -2357,16 +2357,26 @@
 
         // Add bundle to cart
         function addBundleToCart(bundle) {
-            // Add all bundle items to cart
+            // Add all bundle items to cart directly
+            let itemsAdded = 0;
             bundle.items.forEach(item => {
-                addToCart(item);
+                const existingItem = cart.find(i => i.item_id === item.item_id);
+                if (existingItem) {
+                    existingItem.quantity = (existingItem.quantity || 1) + 1;
+                } else {
+                    cart.push({ ...item, quantity: 1 });
+                }
+                itemsAdded++;
             });
+            
+            // Update display
+            updateDisplay();
             
             // Clear bundles display
             document.getElementById('bundlesContainer').innerHTML = '';
             
             // Show success message
-            alert(`🎉 Bundle added! You saved ₹${bundle.savings.toFixed(0)}!`);
+            alert(`🎉 Bundle added! ${itemsAdded} items added to cart. You saved ₹${bundle.savings.toFixed(0)}!`);
         }
 
         // Modal wrapper functions for features
