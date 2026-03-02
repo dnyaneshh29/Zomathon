@@ -1,0 +1,174 @@
+# 🏆 Causal Revenue-Optimized Engine Configuration
+
+# Data Generation
+data:
+  n_users: 5000
+  n_items: 1000
+  n_restaurants: 100
+  n_orders: 10000
+  time_span_days: 365
+  seed: 42
+  
+  # Causal structure (UNIQUE!)
+  treatment_effect: 0.15  # True causal effect of recommendations
+  confounding_strength: 0.3  # Confounding bias
+  profit_margin_range: [0.15, 0.45]  # Item profit margins
+
+# Sequential Model (Transformer)
+sequential:
+  embedding_dim: 256
+  n_heads: 8
+  n_layers: 6
+  dropout: 0.2
+  max_seq_length: 20
+
+# Graph Model
+graph:
+  min_support: 10
+  min_confidence: 0.15
+  use_lift: true
+  use_pagerank: true
+
+# Semantic Model
+semantic:
+  model_name: "all-MiniLM-L6-v2"
+  embedding_dim: 384
+  faiss_index_type: "IVF"
+  n_clusters: 100
+
+# Causal Revenue Estimator (REVOLUTIONARY!)
+causal:
+  method: "double_ml"  # Double Machine Learning
+  treatment: "recommendation_shown"
+  outcome: "incremental_revenue"
+  confounders: ["user_segment", "time_of_day", "cart_value", "order_history"]
+  
+  # Counterfactual estimation
+  propensity_model: "lightgbm"
+  outcome_model: "neural_network"
+  
+  # Confidence intervals
+  n_bootstrap: 1000
+  confidence_level: 0.95
+
+# Profit-Aware Ranker (UNIQUE!)
+profit:
+  optimize_metric: "profit"  # Not just revenue!
+  consider_costs: true
+  cost_per_recommendation: 0.5  # Platform cost
+  
+  # Multi-objective weights
+  revenue_weight: 0.6
+  margin_weight: 0.3
+  user_satisfaction_weight: 0.1
+
+# Fatigue Protection (INNOVATIVE!)
+fatigue:
+  enabled: true
+  rejection_threshold: 3  # Consecutive rejections
+  cooldown_period: 7200  # 2 hours in seconds
+  
+  # Adaptive aggressiveness
+  min_aggressiveness: 0.3
+  max_aggressiveness: 1.0
+  decay_rate: 0.1
+
+# Training
+training:
+  batch_size: 512
+  learning_rate: 0.001
+  epochs: 50
+  early_stopping_patience: 5
+  
+  # Loss weights
+  causal_loss_weight: 0.4
+  profit_loss_weight: 0.3
+  acceptance_loss_weight: 0.3
+
+# Inference
+inference:
+  candidate_size: 200
+  top_k: 10
+  min_causal_effect: 5.0  # Minimum ₹5 incremental revenue
+  min_profit_margin: 0.10  # Minimum 10% margin
+  
+  # Real-time optimization
+  max_latency_ms: 200
+  enable_caching: true
+  cache_ttl: 3600
+
+# API
+api:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 4
+  reload: false
+  
+  # Rate limiting
+  rate_limit: 1000  # requests per minute
+  
+  # Monitoring
+  enable_metrics: true
+  metrics_port: 9090
+
+# Redis
+redis:
+  host: "localhost"
+  port: 6379
+  db: 0
+  password: null
+  
+  # Cache keys
+  recommendation_cache_prefix: "rec:"
+  causal_estimate_cache_prefix: "causal:"
+  fatigue_state_prefix: "fatigue:"
+
+# Business Metrics
+business:
+  baseline_aov: 450
+  baseline_profit_margin: 0.25
+  
+  # Targets
+  target_incremental_revenue: 75  # ₹75 per order
+  target_profit_lift: 0.50  # 50% profit increase
+  target_satisfaction_score: 4.5  # out of 5
+
+# Evaluation
+evaluation:
+  # Causal analysis
+  run_causal_analysis: true
+  causal_methods: ["double_ml", "propensity_score", "instrumental_variable"]
+  
+  # A/B testing
+  test_size: 10000
+  control_ratio: 0.5
+  significance_level: 0.05
+  
+  # Metrics
+  metrics:
+    - "incremental_revenue"
+    - "profit_per_order"
+    - "user_satisfaction"
+    - "recommendation_fatigue"
+    - "acceptance_rate"
+    - "aov_lift"
+
+# Paths
+paths:
+  data_dir: "data/raw"
+  processed_dir: "data/processed"
+  models_dir: "models/saved"
+  logs_dir: "logs"
+  mlruns_dir: "mlruns"
+  cache_dir: "cache"
+
+# Logging
+logging:
+  level: "INFO"
+  format: "json"
+  file: "logs/app.log"
+  
+  # What to log
+  log_predictions: true
+  log_causal_estimates: true
+  log_fatigue_events: true
